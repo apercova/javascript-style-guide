@@ -1,13 +1,14 @@
 # Node.js Style Guide
 
-This is a guide for writing consistent and aesthetically pleasing node.js code.
-It is inspired by what is popular within the community, and flavored with some
-personal opinions.
+This is a guide for writing consistent and aesthetically pleasing JavaScript 
+code. It is inspired by what is popular within the community, and flavored with 
+some personal opinions.
 
-This guide was created by [Felix Geisendörfer](http://felixge.de/) and is
-licensed under the [CC BY-SA 3.0](http://creativecommons.org/licenses/by-sa/3.0/)
-license. You are encouraged to fork this repository and make adjustments
-according to your preferences.
+This guide was created by [Felix Geisendörfer](http://felixge.de/) and modified 
+by [Remy Sharp](http://remysharp.com) and is licensed under the 
+[CC BY-SA 3.0](http://creativecommons.org/licenses/by-sa/3.0/) license. You are 
+encouraged to fork this repository and make adjustments according to your 
+preferences.
 
 ![Creative Commons License](http://i.creativecommons.org/l/by-sa/3.0/88x31.png)
 
@@ -82,26 +83,17 @@ if (true)
 
 Also, notice the use of whitespace before and after the condition statement.
 
-## Declare one variable per var statement
+## Declare variables at the top
 
-Declare one variable per var statement, it makes it easier to re-order the
-lines. Ignore [Crockford][crockfordconvention] on this, and put those
-declarations wherever they make sense.
+As per [Crockford][crockfordconvention], put all your variable declaration at 
+the top of the functional scope. You can if you prefer, declare each variable
+individually (which makes it easier to re-order).
+
+Indent to match the `var` statement (i.e. 4 spaces).
+
+*TODO: decide whether this is the right thing to do, it breaks existing rules.*
 
 *Right:*
-
-```js
-var keys   = ['foo', 'bar'];
-var values = [23, 42];
-
-var object = {};
-while (items.length) {
-  var key = keys.pop();
-  object[key] = values.pop();
-}
-```
-
-*Wrong:*
 
 ```js
 var keys = ['foo', 'bar'],
@@ -111,6 +103,19 @@ var keys = ['foo', 'bar'],
 
 while (items.length) {
   key = keys.pop();
+  object[key] = values.pop();
+}
+```
+
+*Wrong:*
+
+```js
+var keys   = ['foo', 'bar'];
+var values = [23, 42];
+
+var object = {};
+while (items.length) {
+  var key = keys.pop();
   object[key] = values.pop();
 }
 ```
@@ -195,7 +200,7 @@ keys when your interpreter complains:
 var a = ['hello', 'world'];
 var b = {
   good: 'code',
-  'is generally': 'pretty',
+  'is generally': 'pretty'
 };
 ```
 
@@ -209,6 +214,30 @@ var b = {"good": 'code'
         , is generally: 'pretty'
         };
 ```
+
+## Trailing commas in objects
+
+Whilst we continue to support IE7 (in projects like JS Bin) trailing commas will
+throw an exception, so don't do it.
+
+*Right:*
+
+```js
+var obj = {
+  a: 1,
+  b: 2
+};
+```
+
+*Wrong:*
+
+```js
+var obj = {
+  a: 1,
+  b: 2,
+};
+```
+
 
 ## Use the === operator
 
@@ -236,22 +265,29 @@ if (a == '') {
 
 [comparisonoperators]: https://developer.mozilla.org/en/JavaScript/Reference/Operators/Comparison_Operators
 
-## Use multi-line ternary operator
+## Ternary operator
 
-The ternary operator should not be used on a single line. Split it up into multiple lines instead.
+If a ternary operator is being set to a primative, then it can be single line.
+Otherwise it must be split up into multiple lines.
 
 *Right:*
 
 ```js
-var foo = (a === b)
-  ? 1
-  : 2;
+var foo = (a === b) ? 1 : 2;
+
+var bar = (a === b)
+  ? app.doA()
+  : app.other('b');
 ```
 
 *Wrong:*
 
 ```js
-var foo = (a === b) ? 1 : 2;
+var foo = (a === b)
+  ? 1
+  : 2;
+
+
 ```
 
 ## Do not extend built-in prototypes
@@ -376,9 +412,10 @@ req.on('end', function() {
 });
 ```
 
-## No nested closures
+## Reduce nested closures
 
-Use closures, but don't nest them. Otherwise your code will become a mess.
+Use closures, but try to avoid don't nesting them. Otherwise your code will 
+become a mess.
 
 *Right:*
 
@@ -401,6 +438,10 @@ setTimeout(function() {
   });
 }, 1000);
 ```
+
+This is much easier to avoid with Node.js code, but in the browser a single
+script can clobber variable names, so nesting inside a self executing anonymous
+function is acceptable.
 
 ## Use slashes for comments
 
@@ -459,3 +500,8 @@ Feel free to use getters that are free from [side effects][sideeffect], like
 providing a length property for a collection class.
 
 [sideeffect]: http://en.wikipedia.org/wiki/Side_effect_(computer_science)
+
+## Exceptions
+
+There are always exceptions to all rules. If you intend to break the rules, to
+it intentionally, ensure it's justified and explained.
