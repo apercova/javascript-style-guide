@@ -86,20 +86,18 @@ Also, notice the use of whitespace before and after the condition statement.
 ## Declare variables at the top
 
 As per [Crockford][crockfordconvention], put all your variable declaration at 
-the top of the functional scope. You can if you prefer, declare each variable
-individually (which makes it easier to re-order).
-
-Indent to match the `var` statement (i.e. 4 spaces).
+the top of the functional scope. Declare each variable
+individually per line (which makes it easier to re-order).
 
 *TODO: decide whether this is the right thing to do, it breaks existing rules.*
 
 *Right:*
 
 ```js
-var keys = ['foo', 'bar'],
-    values = [23, 42],
-    object = {},
-    key;
+var keys = ['foo', 'bar'];
+var values = [23, 42];
+var object = {};
+var key;
 
 while (items.length) {
   key = keys.pop();
@@ -110,8 +108,8 @@ while (items.length) {
 *Wrong:*
 
 ```js
-var keys   = ['foo', 'bar'];
-var values = [23, 42];
+var keys   = ['foo', 'bar'],
+    values = [23, 42];
 
 var object = {};
 while (items.length) {
