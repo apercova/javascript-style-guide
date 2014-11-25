@@ -290,7 +290,7 @@ var foo = (a === b)
 ## Do not extend built-in prototypes
 
 Do not extend the prototype of native JavaScript objects. Your future self will
-be forever grateful.
+be forever grateful (*unless you're creating a spec'ed polyfill).
 
 *Right:*
 
