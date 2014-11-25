@@ -215,15 +215,14 @@ var b = {"good": 'code'
 
 ## Trailing commas in objects
 
-Whilst we continue to support IE7 (in projects like JS Bin) trailing commas will
-throw an exception, so don't do it.
+Unless you're in IE7 - which is unlikely nowadays (and JS Bin doesn't directly support IE7 and more), trailing comma is preferred in objects (which allows for easier updates):
 
 *Right:*
 
 ```js
 var obj = {
   a: 1,
-  b: 2
+  b: 2,
 };
 ```
 
@@ -232,7 +231,7 @@ var obj = {
 ```js
 var obj = {
   a: 1,
-  b: 2,
+  b: 2
 };
 ```
 
